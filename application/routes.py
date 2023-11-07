@@ -12,7 +12,7 @@ def format_character(character):
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello World ! </p>"
+    return " "
 
 @app.route("/characters", methods=['POST'])
 def create_character():
