@@ -12,9 +12,13 @@ psycopg2-binary = "*"
 gunicorn = "*"
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.11"
 
 [scripts]
 dev="flask run"
+test="pytest"
+coverage = "pytest --cov-report term-missing --cov=."
+

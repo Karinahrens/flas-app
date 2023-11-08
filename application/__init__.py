@@ -9,10 +9,10 @@ db = SQLAlchemy()
 
 # Application factory
 
-def create_app(end=None):
+def create_app(env=None):
     app = Flask(__name__)
 
-    #  set up the enviroment variables depending on the enviroment
+    #  set up the environment variables depending on the environment
 
     if env == 'TEST':
         app.config['TESTING'] = True
@@ -21,7 +21,7 @@ def create_app(end=None):
     else:
         app.config['TESTING'] = False
         app.config['DEBUG'] = True
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["TEST_DATABASE_URL"]    
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DATABASE_URL"]    
 
 # connecting db
     db.init_app(app)   
@@ -30,6 +30,6 @@ def create_app(end=None):
 
     CORS(app)
 
-    from application import routes
-
+    from application.routes import characters
+    app.register_blueprint(characters)
     return app

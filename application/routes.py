@@ -1,6 +1,8 @@
-from application import app
+from application import *
 from flask import *
 from application.models import *
+
+characters = Blueprint("characters", __name__)
 
 def format_character(character):
     return {
@@ -10,11 +12,11 @@ def format_character(character):
         "catch_phrase": character.catch_phrase
     }
 
-@app.route("/")
+@characters.route("/")
 def hello_world():
     return " "
 
-@app.route("/characters", methods=['POST'])
+@characters.route("/characters", methods=['POST'])
 def create_character():
     # retrieve the body - req.body
     data = request.json
@@ -25,7 +27,7 @@ def create_character():
     db.session.commit()
     return jsonify(id=character.id, name=character.name, age=character.age, catch_phrase=character.catch_phrase)
 
-@app.route("/characters")
+@characters.route("/characters")
 def get_characters():
     characters = FriendsCharacter.query.all()
     character_list = []
@@ -33,12 +35,12 @@ def get_characters():
         character_list.append(format_character(character))
     return {'characters': character_list}    
 
-@app.route("/characters/<id>")
+@characters.route("/characters/<id>")
 def get_character(id):
     character = FriendsCharacter.query.filter_by(id=id).first()
     return jsonify(id=character.id, name=character.name, age=character.age, catch_phrase=character.catch_phrase)
 
-@app.route("/characters/<id>", methods=["DELETE"])
+@characters.route("/characters/<id>", methods=["DELETE"])
 def delete_character(id):
         character = FriendsCharacter.query.filter_by(id=id).first()
         db.session.delete(character)
@@ -46,7 +48,7 @@ def delete_character(id):
         return "Character Deleted"
 
 
-@app.route("/characters/<id>", methods=["PATCH"])
+@characters.route("/characters/<id>", methods=["PATCH"])
 def update_character(id):
         character = FriendsCharacter.query.filter_by(id=id)
         data = request.json
