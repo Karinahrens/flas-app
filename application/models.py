@@ -1,6 +1,5 @@
 from application import *
 
-app.app_context().push()
 
 class FriendsCharacter(db.Model):
     id = db.Column(db.Integer, primary_key=True)
