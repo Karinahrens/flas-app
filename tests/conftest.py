@@ -13,6 +13,8 @@ def client():
 #  create a test client to which we can make requests
     client = app.test_client()
 
+   
+
 # create a test database with some test data
     with app.app_context():
         db.create_all()
